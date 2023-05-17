@@ -1,0 +1,16 @@
+.timeline-container{
+    background:#4B4D52 !important;
+    border-radius:1rem !important;
+    border:2px solid #334245 !important;
+    color:#ffffff !important;
+    transition-property: opacity,transform,box-shadow !important;
+    box-shadow:0 0 1rem 0 #2a2f3b ;
+    
+}
+.aos-animate{
+    box-shadow:1rem 1rem 1rem 0 #2a2f3b !important;
+}
+body{
+    overflow: auto !important;
+    font-size: calc(10px + 0.5vw);
+}
