@@ -14,6 +14,7 @@
     border:1px solid black;
     position: relative;
     --n:0;
+    /* Finds the distance between the center and the object */
     --pos: calc(var(--scroll) * 1px + 40vw * var(--n) - 30vw);
     --opacity: calc(var(--scroll) + 40 * var(--vw) * var(--n) - 30 * var(--vw));  
     /* transform: perspective(500px) translateZ(calc(- var(--pos) * var(--pos))); */
@@ -22,7 +23,7 @@
     z-index: calc(500 - max(var(--opacity), -1*var(--opacity)));
     width:40vw !important;
     aspect-ratio: 5/3;
-    border-radius: 2em;
+    border-radius: 0.5em;
    
 }
 

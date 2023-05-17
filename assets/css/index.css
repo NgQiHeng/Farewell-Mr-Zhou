@@ -14,3 +14,17 @@ body{
     overflow: auto !important;
     font-size: calc(10px + 0.5vw);
 }
+
+.line{
+    background-color: rgb(157,190,255) !important;
+    box-shadow: 0 0 13px 3px #A6CBBE;
+    height:0;
+    position: absolute;
+}
+
+.line > *{
+    border: 6px solid var(--bs-blue) !important;
+    width:2rem !important;
+    height:2rem !important;
+    
+}
