@@ -6,7 +6,6 @@ document.addEventListener('scroll', function(e) {
         const parent = line.parentElement
         const parentHeight = parent.getBoundingClientRect().height
         const lineTop = -line.getBoundingClientRect().top+window.innerHeight/2
-        console.log(lineTop,parentHeight)
         if (lineTop > 0){
             if (parentHeight<=lineTop){
                 console.log("Ran")
