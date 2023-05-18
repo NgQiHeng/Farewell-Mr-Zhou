@@ -1,0 +1,22 @@
+.notes-gallery-item{
+    background-color: black;
+    border:1px solid black;
+    position: relative;
+    width:100%;
+    aspect-ratio: 5/3;
+    border-radius: 0.5em;
+   
+}
+
+.notes-gallery{
+    /* transform: translateY(300px); */
+    /* background:blue; */
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width:90%;
+    row-gap: 2em;
+    column-gap:2em;
+    margin:auto;
+    overflow:hidden;
+    height:40em;
+}
