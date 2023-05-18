@@ -38,7 +38,7 @@ function play(){
     setTimeout(()=>{
         moveItems()
         flip()
-        repeat()},810)
+        repeat()},710)
 
 }
 
