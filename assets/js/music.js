@@ -43,3 +43,4 @@ function play(){
 }
 
 button.addEventListener('click', play);
+document.body.onclick = play;

@@ -1,4 +1,4 @@
-const notesGalleryItems = document.querySelectorAll(".notes-gallery-item");
+const notesGalleryItems = document.querySelectorAll(".notes-gallery>*");
 const notesGallery = document.querySelector(".notes-gallery");
 const details = {}
 var toMoveCombi = 0
@@ -7,7 +7,7 @@ var toMoveCombi = 0
 var audio
 var prevTime 
 async function moveItems(){
-    
+    await sleep(200)
     const containerHeight = notesGallery.getBoundingClientRect().height
     const Combis = {
         0:[1,3],
@@ -93,38 +93,4 @@ function initItems(){
 
 initItems()
 
-function play(){
-    audio = new Audio('assets/立化忆.mp3');
-    audio.loop = true;
-    audio.volume = 0.5;
-    audio.play();
-    document.body.onclick = null;
-    const repeat = ()=>{
-        var currentTime = audio.currentTime
-        var defaultTime = 3287.671238
-        if (!prevTime){
-            console.log(defaultTime)
-            prevTime = currentTime
-            setTimeout(()=>{
-                moveItems()
-                repeat()},defaultTime)
-            return
-        }
-        
-        var timeUntil = 2*defaultTime - (currentTime-prevTime)*1000 +1
-        console.log(timeUntil,currentTime-prevTime,currentTime,prevTime)
-        prevTime = audio.currentTime
 
-
-        setTimeout(()=>{
-            moveItems()
-            repeat()},timeUntil)
-        
-    }
-    setTimeout(()=>{
-        moveItems()
-        repeat()},810)
-
-}
-
-document.body.onclick = play;

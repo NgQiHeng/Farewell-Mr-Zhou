@@ -7,9 +7,6 @@
     box-shadow:0 0 1rem 0 #2a2f3b ;
     
 }
-.aos-animate{
-    box-shadow:1rem 1rem 1rem 0 #2a2f3b !important;
-}
 body{
     overflow: auto !important;
     font-size: calc(10px + 0.5vw);

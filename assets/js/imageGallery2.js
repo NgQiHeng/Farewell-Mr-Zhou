@@ -52,4 +52,3 @@ function play(){
         repeat()},810)
 
 }
-document.body.onclick = play;
