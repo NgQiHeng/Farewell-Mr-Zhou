@@ -11,6 +11,7 @@ function play(){
     audio.volume = 0.5;
     audio.play();
     document.body.onclick = null;
+    content.style.opacity = 1
     const repeat = ()=>{
         var currentTime = audio.currentTime
         var defaultTime = 3287.671238
