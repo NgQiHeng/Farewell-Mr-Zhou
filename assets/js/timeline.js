@@ -6,18 +6,18 @@ document.addEventListener('scroll', function(e) {
         const parent = line.parentElement
         const parentHeight = parent.getBoundingClientRect().height
         const lineTop = -line.getBoundingClientRect().top+window.innerHeight/2
-        if (lineTop > 0){
+        // Check if the line has reached that place
+        if (lineTop > 0){            
             if (parentHeight<=lineTop){
-                console.log("Ran")
                 line.style.height = `${parentHeight}px`
             }
             else{
                 line.style.height = `${lineTop}px`
-                break
             }
         }
+        // Reset the line height of the dots that have not been covered
         else{
-            break
+            line.style.height = '0px'
         }
     }
 });
