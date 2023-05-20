@@ -2,6 +2,8 @@ h1 {
     font-size: 2.2em;
 }
 .timeline-container {
+    width: 35%;
+    padding: 1rem;
     position: relative;
     --rotateAmt:0;
     background:transparent !important;
