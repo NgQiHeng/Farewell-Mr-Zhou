@@ -5,15 +5,12 @@ body{
 }
 
 .line{
-    background-color: rgb(157,190,255) !important;
+    background-color: rgb(157,190,255);
     box-shadow: 0 0 13px 3px #A6CBBE;
     height:0;
     position: absolute;
-}
-
-.line > *{
-    border: 6px solid var(--bs-blue) !important;
-    width:2rem !important;
-    height:2rem !important;
-    
+    width: 1rem;
+    display: flex;
+    padding: 0;
+    overflow: visible;
 }
