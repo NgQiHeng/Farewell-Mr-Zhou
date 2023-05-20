@@ -1,6 +1,7 @@
 const notesGalleryItems = document.querySelectorAll(".notes-gallery>*");
 const notesGallery = document.querySelector(".notes-gallery");
 const details = {}
+const moveStates = [true,true,true]
 var toMoveCombi = 0
 // How to generate random number either -1 or 1
 // 
@@ -18,6 +19,7 @@ async function moveItems(){
     toMoveCombi = (toMoveCombi+1)%3
     for (var i = 1;i<4;i++){
         if (!toMove.includes(i)) continue
+        if (!moveStates[i-1]) continue
         const dir = details[i]["dir"]
         const number = details[i]["number"] - dir
         var height = notesGalleryItems[i+number*3-1].getBoundingClientRect().top-notesGalleryItems[i-1+number*3+3*dir].getBoundingClientRect().top
@@ -37,9 +39,42 @@ async function moveItems(){
         }
         details[i]["translateAmt"] = curTranslate
         for (var j = i-1;j<notesGalleryItems.length;j+=3){
-            notesGalleryItems[j].style.transition = `transform 1s ease-in-out`
+            notesGalleryItems[j].style.transitionDuration = `1s`
+            notesGalleryItems[j].style.transitionTimingFunction = `ease-in-out`
             notesGalleryItems[j].style.transform = `translateY(${curTranslate}px)`
         }
+    }
+}
+function initContainer(){
+    const updateStates = function(event){
+        var x = event.clientX
+        console.log(x,notesGalleryItems[0].getBoundingClientRect().left,notesGalleryItems[0].getBoundingClientRect().right)
+        if (notesGalleryItems[0].getBoundingClientRect().left<x && x<notesGalleryItems[0].getBoundingClientRect().right){
+            moveStates[0] = false
+        }
+        else{
+            moveStates[0] = true
+        }
+        if (notesGalleryItems[1].getBoundingClientRect().left<x && x<notesGalleryItems[1].getBoundingClientRect().right){
+            moveStates[1] = false
+        }
+        else{
+            moveStates[1] = true
+        }
+        if (notesGalleryItems[2].getBoundingClientRect().left<x && x<notesGalleryItems[2].getBoundingClientRect().right){
+            moveStates[2] = false
+        }
+        else{
+            moveStates[2] = true
+        }
+        console.log(moveStates)
+    }
+    notesGallery.onmouseenter = updateStates
+    notesGallery.onmousemove = updateStates
+    notesGallery.onmouseleave = function(event){
+        moveStates[0] = true
+        moveStates[1] = true
+        moveStates[2] = true
     }
 }
 function initItems(){
@@ -85,6 +120,8 @@ function initItems(){
             details[i]["dir"] = 1}
         details[i]["translateAmt"] = curTranslate
         for (var j = i-1;j<notesGalleryItems.length;j+=3){
+            notesGalleryItems[j].index = j
+            notesGalleryItems[j].colNum = i
             notesGalleryItems[j].style.transform = `translateY(${curTranslate}px)`
         }
         if (details[i]['number'] == 0) details[i]['dir'] = -1
@@ -92,5 +129,4 @@ function initItems(){
 }
 
 initItems()
-
-
+initContainer()

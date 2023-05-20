@@ -54,6 +54,7 @@ h1 {
 .timeline-container > .front p, .timeline-container > .back p {
     font-size: 0.9125rem;
     line-height: 160%;
-    color: #999;
+    color: #e2f8ff;
+    margin-top:1em;
 }
 

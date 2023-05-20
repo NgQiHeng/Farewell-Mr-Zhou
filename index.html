@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="assets/css/index.css">
     <link rel="stylesheet" href="assets/css/notesGallery.css">
     <link rel="stylesheet" href="assets/css/imageGallery2.css">
+    <link rel="stylesheet" href="assets/css/polaroidPicture.css">
 </head>
 
 <body id="body" style="background: #3e3e42;color: #dddddd;font-family: 'Noto Sans JP', sans-serif;overflow: hidden;">
@@ -38,7 +39,7 @@
     <div id="content" style="display: block;opacity: 10;background: #2d2d30;">
         <div class="container align-items-center" data-aos="fade-up-left" style="height: 100%;min-height: 0px;margin-bottom: 10%;display: flex;">
             <div class="row" style="height: 100%;margin: 0;">
-                <div class="col-7 col-md-6 col-lg-7" style="text-align: center;padding: 2rem;"><img data-aos="zoom-in-right" src="assets/img/2014%20SC%20Photo%20Taking.jpeg" style="text-align: right;width: 80%;border-radius: 1rem;border: 1rem solid #eeeeee;border-bottom-width: 2.5rem;border-bottom-style: solid;transform: rotate(-4deg);"></div>
+                <div class="col-7 col-md-6 col-lg-7" style="text-align: center;padding: 2rem;"><img class = "polaroid-picture" data-aos="zoom-in-right" src="assets/img/2014%20SC%20Photo%20Taking.jpeg" style="text-align: right;width: 80%;border-radius: 1rem;border: 1rem solid #eeeeee;border-bottom-width: 2.5rem;border-bottom-style: solid;transform: rotate(-4deg);"></div>
                 <div class="col-5 col-md-6 col-lg-5 align-items-center" data-aos="zoom-in-left" style="font-family: Oswald, sans-serif;padding: 2rem;display: flex;">
                     <p style="font-size: 3rem;text-align: center;">Its been a great few years in RV</p>
                 </div>
@@ -49,12 +50,12 @@
                 <div class="col-5 col-md-6 col-lg-5 align-items-center" style="text-align: right;padding: 2rem;display: flex;">
                     <p data-aos="zoom-in-right" style="font-size: 3rem;font-family: Oswald, sans-serif;text-align: center;">Going through thick &amp; thin, ups and downs</p>
                 </div>
-                <div class="col-7 col-md-6 col-lg-7" style="text-align: center;padding: 2rem;"><img data-aos="zoom-in-left" src="assets/img/44th%20kawaii.jpg" style="text-align: right;width: 80%;border-radius: 1rem;border: 1rem solid #eeeeee;border-bottom-width: 2.5rem;border-bottom-style: solid;transform: rotate(4deg);"></div>
+                <div class="col-7 col-md-6 col-lg-7" style="text-align: center;padding: 2rem;"><img class = "polaroid-picture" data-aos="zoom-in-left" src="assets/img/44th%20kawaii.jpg" style="text-align: right;width: 80%;border-radius: 1rem;border: 1rem solid #eeeeee;border-bottom-width: 2.5rem;border-bottom-style: solid;transform: rotate(4deg);"></div>
             </div>
         </div>
         <div class="container" style="height: 100%;min-height: 0px;margin: 96.8px 9px 195.594px;margin-bottom: 10%;">
             <div class="row" style="height: 100%;margin: 0;">
-                <div class="col-7 col-md-6 col-lg-7" style="text-align: center;padding: 2rem;"><img data-aos="zoom-in-right" src="assets/img/2016%20YLEAD.jpg" style="text-align: right;width: 80%;border-radius: 1rem;border: 1rem solid #eeeeee;border-bottom-width: 2.5rem;border-bottom-style: solid;transform: rotate(-3deg);"></div>
+                <div class="col-7 col-md-6 col-lg-7" style="text-align: center;padding: 2rem;"><img class = "polaroid-picture" data-aos="zoom-in-right" src="assets/img/2016%20YLEAD.jpg" style="text-align: right;width: 80%;border-radius: 1rem;border: 1rem solid #eeeeee;border-bottom-width: 2.5rem;border-bottom-style: solid;transform: rotate(-3deg);"></div>
                 <div class="col-5 col-md-6 col-lg-5 align-items-center" style="font-family: Oswald, sans-serif;padding: 2rem;display: flex;">
                     <p data-aos="zoom-in-left" style="font-size: 3rem;text-align: center;">Lets take a look back at the good times</p>
                 </div>
@@ -364,7 +365,9 @@
                             </div>
                             <div class="card border-0 shadow-none">
                                 <div class="card-body d-flex align-items-center p-0"></div>
-                </div>
+                            </div>
+                        </div>
+                    </div>
                 <div class="col">
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <p class="text-center">Hi Mr Zhou, thank you for entertaining my questions for the past term you have been teaching us. Though the period may be short, it was nevertheless very fruitful. Thank you</p>
@@ -375,6 +378,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                     <div class="col">
                         <div class="d-flex flex-column justify-content-center align-items-center">
                             <p class="text-center">Hello Mr Zhou! Thank you for always listening to the questions amongst ourselves and answering them in the simplest way possible. Thank you for your service in RV and I wish you all the best in your career in teaching, and inspire as many young and bright minds as you can in your new school (but not too much so HCI doesn’t trash us in everything).</p>
@@ -475,10 +479,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
             <!-- Row 4 -->
-            <div class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-lg-3" data-aos="zoom-in-up" style="margin-bottom: 5%;">
                 <div class="col">
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <p class="text-center">Hi Mr Zhou, thank you for your guidance throughout the past few years and always being ready to help when we needed help. Thank you for always putting your students first, with various initiatives such as Teacher Assistants to help the weaker students, supporting any ideas that we have, and always being so calm and approachable! All the best in your next school!</p>
@@ -521,9 +522,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
             <!-- Row 5 -->
-            <div class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-lg-3" data-aos="zoom-in-up" style="margin-bottom: 5%;">
                 <div class="col">
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <p class="text-center">Hi Mr Zhou!! I never really got a chance to talk to you aside from computing lessons but you were one of the teachers which made me feel comfortable in RV with your light hearted personality. I have gotten slightly better at OOP since Sec 3 HAHA but still nowhere near good enough :( All the best for your future job!!</p>
@@ -570,9 +569,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
             <!-- Row 6 -->
-            <div class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-lg-3" data-aos="zoom-in-up" style="margin-bottom: 5%;">
                 <div class="col">
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <p class="text-center">HI MR ZHOU <br>
@@ -618,9 +615,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
             <!-- Row 7 -->
-            <div class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-lg-3" data-aos="zoom-in-up" style="margin-bottom: 5%;">
                 <div class="col">
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <p class="text-center">
@@ -681,9 +676,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
             <!-- Row 8 -->
-            <div class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-lg-3" data-aos="zoom-in-up" style="margin-bottom: 5%;">
                 <div class="col">
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <p class="text-center">Hi Mr Zhou,
@@ -728,7 +721,7 @@
                         <p class="text-center">
                             Why did the teacher cross the road? To get to HCI 🙁<br>
                             The time has come to bid you adieu, but we couldn't let this moment pass without expressing our heartfelt gratitude.  <br>
-                            As we bid you farewell, know that your impact on our lives extends far beyond the realm of computing. You've taught us invaluable life lessons: to approach challenges with an open mind, and to embrace creativity in problem-solving. We will all miss you and Du Du :( All the best! <3
+                            As we bid you farewell, know that your impact on our lives extends far beyond the realm of computing. You've taught us invaluable life lessons: to approach challenges with an open mind, and to embrace creativity in problem-solving. We will all miss you and Du Du :( All the best! &lt;3
                         </p>
                         <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="assets/img/its%20not%20illlegal%20i%20swear.png">
                             <div>
@@ -741,9 +734,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
             <!-- Row 9 -->
-            <div class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-lg-3" data-aos="zoom-in-up" style="margin-bottom: 5%;">
                 <div class="col">
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <p class="text-center">lorem</p>
@@ -790,9 +781,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
             <!-- Row n -->
-            <div class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-lg-3" data-aos="zoom-in-up" style="margin-bottom: 5%;">
                 <div class="col">
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <p class="text-center">lorem</p>
@@ -803,6 +792,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                     <div class="col">
                         <div class="d-flex flex-column justify-content-center align-items-center">
                             <p class="text-center">lorem</p>
@@ -831,11 +821,13 @@
                             </div>
                         </div>
                     </div>
-            </div>
-            <h1 style="text-align: center;margin-top: 10%;">Thank you for everything Mr Zhou &lt;3</h1>
+            
 
+    
+            </div>
         </div>
-    </div>
+    <h1 style="text-align: center;margin-top: 10%;">Thank you for everything Mr Zhou &lt;3</h1>
+
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/aos.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
@@ -843,6 +835,7 @@
     <script src="assets/js/timeline.js"></script>
     <script src="assets/js/notesGallery.js"></script>
     <script src="assets/js/imageGallery2.js"></script>
+    <script src="assets/js/polaroidPicture.js"></script>
 </body>
 
 </html>
