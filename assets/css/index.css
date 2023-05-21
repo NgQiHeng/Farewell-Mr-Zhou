@@ -1,7 +1,7 @@
 
 body{
     font-size: calc(10px + 0.5vw);
-    overflow-x: hidden;
+    overflow:hidden;
     background: #3e3e42;
     color: #dddddd;
     font-family: 'Oswald', 'Noto Sans JP', sans-serif;
@@ -24,6 +24,7 @@ body{
     opacity: 0;
     background: #2d2d30;
     padding-top: 2rem;
+    padding-bottom: 5%;
 }
 
 .show {
@@ -34,7 +35,7 @@ body{
 
 .polaroid {
     text-align: right;
-    width: 60%;
+    width: 50%;
     border-radius: 1rem;
     border: 1rem solid #eeeeee;
     border-bottom-width: 2.5rem;
