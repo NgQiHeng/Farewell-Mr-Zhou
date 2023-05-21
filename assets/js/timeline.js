@@ -6,7 +6,6 @@ document.addEventListener('scroll', function(e) {
         const parent = line.parentElement
         const parentHeight = parent.getBoundingClientRect().height
         const lineTop = -line.getBoundingClientRect().top+window.innerHeight/2
-        console.log(`parent: ${parent.parentElement.id} linetop: ${lineTop}`)
         // Check if the line has reached that place
         if (lineTop > 0){                             
             if (parentHeight<=lineTop){
