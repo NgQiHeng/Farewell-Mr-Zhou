@@ -5,13 +5,17 @@ let body = document.getElementById('body');
 
 let content = document.getElementById('content');
 
+var clicked = false
+
 function play(){
-    audio = new Audio('assets/立化忆.mp3');
+    if (clicked == false){
+        audio = new Audio('assets/立化忆.mp3');
     audio.loop = true;
     audio.volume = 0.5;
     audio.play();
+    clicked = true
     document.body.onclick = null;
-    content.style.opacity = 1
+    content.classList.add('show')
     const repeat = ()=>{
         var currentTime = audio.currentTime
         var defaultTime = 3287.671238
@@ -43,7 +47,7 @@ function play(){
         flip()
         movePolariodPictures()
         repeat()},710)
-
+    }
 }
 
 button.addEventListener('click', play);
