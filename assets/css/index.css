@@ -21,8 +21,7 @@ body{
 
 .content {
     display: block;
-    /* RMB TO CHANGE TO 0 */
-    opacity: 1;
+    opacity: 0;
     background: #2d2d30;
     padding-top: 2rem;
 }
