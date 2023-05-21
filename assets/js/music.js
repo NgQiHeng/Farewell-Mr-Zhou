@@ -15,7 +15,10 @@ function play(){
     audio.play();
     clicked = true
     document.body.onclick = null;
+    body.style.opacity = 1
     content.classList.add('show')
+    body.style.overflow = 'visible'
+    body.style.overflowX = 'hidden'
     const repeat = ()=>{
         var currentTime = audio.currentTime
         var defaultTime = 3287.671238
