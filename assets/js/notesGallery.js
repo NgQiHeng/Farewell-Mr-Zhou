@@ -2,27 +2,39 @@ const notesGalleryItems = document.querySelectorAll(".notes-gallery>*");
 const notesGallery = document.querySelector(".notes-gallery");
 const details = {}
 const moveStates = [true,true,true]
+var windowWidth = window.innerWidth
+var mobile = windowWidth<500
+var colCount = mobile?2:3
 var toMoveCombi = 0
-// How to generate random number either -1 or 1
-// 
-var audio
 var prevTime 
+window.addEventListener('resize',()=>{
+    windowWidth = window.innerWidth
+    oldmobile = mobile
+    mobile = windowWidth<500
+    colCount = mobile?2:3
+    if (oldmobile!=mobile){
+        initItems()
+    }
+})
 async function moveItems(){
     await sleep(200)
+    console.log(mobile,colCount)
     const containerHeight = notesGallery.getBoundingClientRect().height
-    const Combis = {
+    const Combis = mobile?{0:[1],1:[2]}:{
         0:[1,3],
         1:[2,3],
         2:[1,2],
     }
+    toMoveCombi = toMoveCombi%colCount
     const toMove = Combis[toMoveCombi]
-    toMoveCombi = (toMoveCombi+1)%3
-    for (var i = 1;i<4;i++){
+    toMoveCombi = toMoveCombi+1
+    for (var i = 1;i<colCount+1;i++){
         if (!toMove.includes(i)) continue
         if (!moveStates[i-1]) continue
         const dir = details[i]["dir"]
         const number = details[i]["number"] - dir
-        var height = notesGalleryItems[i+number*3-1].getBoundingClientRect().top-notesGalleryItems[i-1+number*3+3*dir].getBoundingClientRect().top
+        console.log(i,i+number*colCount-1,i-1+number*colCount+colCount*dir)
+        var height = notesGalleryItems[i+number*colCount-1].getBoundingClientRect().top-notesGalleryItems[i-1+number*colCount+colCount*dir].getBoundingClientRect().top
         height = Math.abs(height)
         var curTranslate = details[i]["translateAmt"] + dir * height
         const totalHeight = details[i]["totalHeight"]
@@ -38,7 +50,7 @@ async function moveItems(){
             details[i]['number'] = 0
         }
         details[i]["translateAmt"] = curTranslate
-        for (var j = i-1;j<notesGalleryItems.length;j+=3){
+        for (var j = i-1;j<notesGalleryItems.length;j+=colCount){
             notesGalleryItems[j].style.transitionDuration = `1s`
             notesGalleryItems[j].style.transitionTimingFunction = `ease-in-out`
             notesGalleryItems[j].style.transform = `translateY(${curTranslate}px)`
@@ -48,7 +60,6 @@ async function moveItems(){
 function initContainer(){
     const updateStates = function(event){
         var x = event.clientX
-        console.log(x,notesGalleryItems[0].getBoundingClientRect().left,notesGalleryItems[0].getBoundingClientRect().right)
         if (notesGalleryItems[0].getBoundingClientRect().left<x && x<notesGalleryItems[0].getBoundingClientRect().right){
             moveStates[0] = false
         }
@@ -67,7 +78,6 @@ function initContainer(){
         else{
             moveStates[2] = true
         }
-        console.log(moveStates)
     }
     notesGallery.onmouseenter = updateStates
     notesGallery.onmousemove = updateStates
@@ -81,18 +91,19 @@ function initItems(){
     const containerHeight = notesGallery.getBoundingClientRect().height
     const containerTop = notesGallery.getBoundingClientRect().top
     const containerBottom = notesGallery.getBoundingClientRect().bottom
-    for (var i = 1;i<4;i++){
-        const number = Math.floor(Math.random()*Math.floor(notesGalleryItems.length/3))
+    console.log(colCount)
+    for (var i = 1;i<colCount+1;i++){
+        const number = Math.floor(Math.random()*Math.floor(notesGalleryItems.length/colCount))
         details[i] = {dir:Math.random() < 0.5 ? -1 : 1,"number":number}
         var curTranslate = 0
         var totalHeight = 0
         var totalRows = 0
         console.log(number)
-        for (var j = i-1;j<notesGalleryItems.length;j+=3){
+        for (var j = i-1;j<notesGalleryItems.length;j+=colCount){
             var height
-            if (j+3<notesGalleryItems.length) var height = notesGalleryItems[j].getBoundingClientRect().top-notesGalleryItems[j+3].getBoundingClientRect().top
+            if (j+colCount<notesGalleryItems.length) var height = notesGalleryItems[j].getBoundingClientRect().top-notesGalleryItems[j+colCount].getBoundingClientRect().top
             else var height = -notesGalleryItems[j].getBoundingClientRect().height
-            if (Math.floor(j/3)<number){
+            if (Math.floor(j/colCount)<number){
                 curTranslate += height
             }
             totalHeight += height
@@ -107,7 +118,7 @@ function initItems(){
         details[i]["totalRows"] = totalRows
 
     }
-    for (var i = 1;i<4;i++){
+    for (var i = 1;i<colCount+1;i++){
         details[i]["dir"] = Math.random() < 0.5 ? -1 : 1
         const lastChild = details[i]["lastChild"][0]
         var curTranslate = details[i]["translateAmt"]
@@ -119,7 +130,8 @@ function initItems(){
             console.log(details[i]['totalRows'])
             details[i]["dir"] = 1}
         details[i]["translateAmt"] = curTranslate
-        for (var j = i-1;j<notesGalleryItems.length;j+=3){
+        for (var j = i-1;j<notesGalleryItems.length;j+=colCount){
+            notesGalleryItems[j].style.transitionDuration = `0s`
             notesGalleryItems[j].index = j
             notesGalleryItems[j].colNum = i
             notesGalleryItems[j].style.transform = `translateY(${curTranslate}px)`

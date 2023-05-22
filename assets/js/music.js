@@ -5,29 +5,22 @@ let body = document.getElementById('body');
 
 let content = document.getElementById('content');
 
+let audio = new Audio('assets/立化忆.mp3');
+audio.loop = true;
+audio.volume = 0.5;
 var clicked = false
-
-function play(){
-    if (clicked == false){
-        audio = new Audio('assets/立化忆.mp3');
-    audio.loop = true;
-    audio.volume = 0.5;
-    audio.play();
-    clicked = true
-    document.body.onclick = null;
-    body.style.opacity = 1
-    content.classList.add('show')
-    body.style.overflow = 'visible'
-    body.style.overflowX = 'hidden'
+function oneLoop(){
+    console.log("Looped")
+    prevTime = null
     const repeat = ()=>{
         var currentTime = audio.currentTime
         var defaultTime = 3287.671238
         if (!prevTime){
             console.log(defaultTime)
-            prevTime = currentTime
+            
             setTimeout(()=>{
                 moveItems()
-                flip()
+                // flip()
                 movePolariodPictures()
                 repeat()},defaultTime)
             return
@@ -40,16 +33,29 @@ function play(){
 
         setTimeout(()=>{
             moveItems()
-            flip()
+            // flip()
             movePolariodPictures()
             repeat()},timeUntil)
         
     }
     setTimeout(()=>{
         moveItems()
-        flip()
+        // flip()
         movePolariodPictures()
         repeat()},710)
+}
+function play(){
+    if (clicked == false){
+        
+        audio.play();
+        clicked = true
+        document.body.onclick = null;
+        body.style.opacity = 1
+        content.classList.add('show')
+        body.style.overflow = 'visible'
+        body.style.overflowX = 'hidden'
+        oneLoop()
+        audio.addEventListener('ended',oneLoop)
     }
 }
 

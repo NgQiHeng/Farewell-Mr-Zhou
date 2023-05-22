@@ -1,4 +1,7 @@
 
+html{
+    overflow-x: hidden;
+}
 body{
     font-size: calc(10px + 0.5vw);
     overflow:hidden;
@@ -35,7 +38,7 @@ body{
 
 .polaroid {
     text-align: right;
-    width: 50%;
+    width: 45%;
     border-radius: 1rem;
     border: 1rem solid #eeeeee;
     border-bottom-width: 2.5rem;
