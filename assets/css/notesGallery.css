@@ -40,11 +40,13 @@
     min-height: 11.2em;
     line-height: 1.4em;
     text-align: justify !important;
+    vertical-align: middle;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 8; /* Adjust the number of lines to be displayed */
     -webkit-box-orient: vertical;
+    -webkit-box-pack: center; /* algin text centrally */
     transition: max-height 1s;
 }
 
@@ -54,7 +56,6 @@
     min-height: 11.2em;
     height:fit-content;
     overflow: hidden;
-    
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: unset; /* Adjust the number of lines to be displayed */
