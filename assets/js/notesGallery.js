@@ -6,7 +6,6 @@ var windowWidth = window.innerWidth
 var mobile = windowWidth<500
 var colCount = mobile?2:3
 var toMoveCombi = 0
-var audio
 var prevTime 
 window.addEventListener('resize',()=>{
     windowWidth = window.innerWidth
