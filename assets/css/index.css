@@ -52,7 +52,7 @@ body{
 }
 
 .polariod-text {
-    font-size: min(5vw, 3rem);
+    font-size: clamp(1rem, 10vw, 3rem);
     text-align: center;
 }
 
@@ -64,6 +64,11 @@ body{
 .timeline-text {
     text-align: center;
     font-size: min(2vw, 1rem);
+}
+
+.footer {
+    text-align: center;
+    width: 100%;
 }
 
 /* Regular is the original position of the timeline block on computer screen */

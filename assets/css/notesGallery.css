@@ -39,13 +39,13 @@
     max-height: 11.2em;
     min-height: 11.2em;
     line-height: 1.4em;
+    text-align: justify !important;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 8; /* Adjust the number of lines to be displayed */
     -webkit-box-orient: vertical;
     transition: max-height 1s;
-
 }
 
 .notes-gallery>*:hover p.text-center{
