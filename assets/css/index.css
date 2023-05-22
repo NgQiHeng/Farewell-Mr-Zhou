@@ -112,4 +112,7 @@ body{
     .polariod-text {
         font-size: min(5vw, 1rem);
     }
+    [data-aos=slide-left] {
+        transform: translateX(200%);
+      }
 }
