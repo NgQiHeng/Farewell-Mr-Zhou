@@ -66,6 +66,7 @@
     animation: popUp 1s forwards;
     z-index: 1000;
     max-height: 40em;
+    overflow: visible;
 }
 
 
@@ -78,3 +79,13 @@
     color:#62a2ff!important;
 }
 
+@media (max-width: 500px) {
+    .notes-gallery{
+        /* transform: translateY(300px); */
+        /* background:blue; */
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        height:58em;
+    }
+    
+}

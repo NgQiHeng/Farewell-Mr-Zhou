@@ -27,7 +27,7 @@ function play(){
             prevTime = currentTime
             setTimeout(()=>{
                 moveItems()
-                flip()
+                // flip()
                 movePolariodPictures()
                 repeat()},defaultTime)
             return
@@ -40,14 +40,14 @@ function play(){
 
         setTimeout(()=>{
             moveItems()
-            flip()
+            // flip()
             movePolariodPictures()
             repeat()},timeUntil)
         
     }
     setTimeout(()=>{
         moveItems()
-        flip()
+        // flip()
         movePolariodPictures()
         repeat()},710)
     }
