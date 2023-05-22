@@ -3,10 +3,8 @@ var prevTime
 var currentMove = 0;
 
 function movePolariodPictures() {
-    console.log(polaroidPictures)
     for (var [i,picture] of Object.entries(polaroidPictures)) {
         if (i%2!=currentMove) continue;
-        console.log(picture)
         picture.style.transition = 'transform 1s ease-in-out';
         picture.style.transform = 'rotate(' + (picture.prevDir*(Math.random() * 5 + 3)) + 'deg)';
         picture.prevDir *= -1;

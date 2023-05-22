@@ -1,12 +1,37 @@
 const notesGalleryItems = document.querySelectorAll(".notes-gallery>*");
 const notesGallery = document.querySelector(".notes-gallery");
-const details = {}
+const extraNote = document.querySelector(".extra-note")
+var details = {}
 const moveStates = [true,true,true]
 var windowWidth = window.innerWidth
 var mobile = windowWidth<500
 var colCount = mobile?2:3
 var toMoveCombi = 0
 var prevTime 
+var removeItemsTimeout
+var prevCol
+for (var item of notesGalleryItems){
+    item.onmouseenter = function(){
+        this.style.opacity = "0"
+        extraNote.style.display = "flex"
+        extraNote.querySelector("p").innerHTML = this.querySelector("p").innerHTML
+        extraNote.querySelector(".text-primary").innerHTML = this.querySelector(".text-primary").innerHTML
+        extraNote.querySelector(".text-muted").innerHTML = this.querySelector(".text-muted").innerHTML
+        console.log(`calc(${(this.colNum-1)*33.3333}% - ${(this.colNum-1)*2}em)`)
+        extraNote.style.left = `calc(${this.colNum-1} * (100% - ${(colCount-1)*2}em)/${colCount} + ${2*(this.colNum-1)}em)`
+        extraNote.style.top = `${(this.getBoundingClientRect().top - notesGallery.getBoundingClientRect().top)/notesGallery.getBoundingClientRect().height*100}%`
+        pauseItems(this.colNum,this)
+        extraNote.onmouseleave = ()=>{
+            console.log("left")
+            resumeItems(this.colNum)
+            this.style.opacity = "1"
+            extraNote.style.display = "none"
+        }
+        var computedStyle = window.getComputedStyle(this)
+        var transitionDuration = computedStyle.getPropertyValue('transition-duration')
+        console.log(transitionDuration)
+    }
+}
 window.addEventListener('resize',()=>{
     windowWidth = window.innerWidth
     oldmobile = mobile
@@ -14,11 +39,44 @@ window.addEventListener('resize',()=>{
     colCount = mobile?2:3
     if (oldmobile!=mobile){
         initItems()
+        initContainer()
     }
 })
+function pauseItems(col){
+    const translateAmt = notesGalleryItems[col-1].getBoundingClientRect().top-notesGallery.getBoundingClientRect().top
+    if (!removeItemsTimeout) details[col]["actual"] = details[col]["translateAmt"]
+    else {
+        clearTimeout(removeItemsTimeout)
+        removeItemsTimeout = null
+        details[prevCol].paused = false
+    }
+
+    details[col]["translateAmt"] = translateAmt
+    details[col].paused = true
+    console.log(col)
+    for (var i = col-1;i<notesGalleryItems.length;i+=colCount){
+        notesGalleryItems[i].classList.add("paused")
+        notesGalleryItems[i].style.transitionDuration = `0s`
+        notesGalleryItems[i].style.transform = `translateY(${translateAmt}px)`
+    }
+}
+
+function resumeItems(col){
+    prevCol = col
+    removeItemsTimeout = setTimeout(()=>{
+        details[col]["translateAmt"] = details[col]["actual"]
+        details[col].paused = false
+        removeItemsTimeout = null
+        prevCol = null
+    },500)
+    
+    for (var i = col-1;i<notesGalleryItems.length;i+=colCount){
+        notesGalleryItems[i].classList.remove("paused")
+        notesGalleryItems[i].style.transitionDuration = `0.5s`
+        notesGalleryItems[i].style.transform = `translateY(${details[col]["actual"]}px)`
+    }
+}
 async function moveItems(){
-    await sleep(200)
-    console.log(mobile,colCount)
     const containerHeight = notesGallery.getBoundingClientRect().height
     const Combis = mobile?{0:[1],1:[2]}:{
         0:[1,3],
@@ -31,9 +89,9 @@ async function moveItems(){
     for (var i = 1;i<colCount+1;i++){
         if (!toMove.includes(i)) continue
         if (!moveStates[i-1]) continue
+        if (details[i].paused) continue
         const dir = details[i]["dir"]
         const number = details[i]["number"] - dir
-        console.log(i,i+number*colCount-1,i-1+number*colCount+colCount*dir)
         var height = notesGalleryItems[i+number*colCount-1].getBoundingClientRect().top-notesGalleryItems[i-1+number*colCount+colCount*dir].getBoundingClientRect().top
         height = Math.abs(height)
         var curTranslate = details[i]["translateAmt"] + dir * height
@@ -51,7 +109,7 @@ async function moveItems(){
         }
         details[i]["translateAmt"] = curTranslate
         for (var j = i-1;j<notesGalleryItems.length;j+=colCount){
-            notesGalleryItems[j].style.transitionDuration = `1s`
+            notesGalleryItems[j].style.transitionDuration = `0.822s`
             notesGalleryItems[j].style.transitionTimingFunction = `ease-in-out`
             notesGalleryItems[j].style.transform = `translateY(${curTranslate}px)`
         }
@@ -92,6 +150,7 @@ function initItems(){
     const containerTop = notesGallery.getBoundingClientRect().top
     const containerBottom = notesGallery.getBoundingClientRect().bottom
     console.log(colCount)
+    details = {}
     for (var i = 1;i<colCount+1;i++){
         const number = Math.floor(Math.random()*Math.floor(notesGalleryItems.length/colCount))
         details[i] = {dir:Math.random() < 0.5 ? -1 : 1,"number":number}
@@ -101,7 +160,7 @@ function initItems(){
         console.log(number)
         for (var j = i-1;j<notesGalleryItems.length;j+=colCount){
             var height
-            if (j+colCount<notesGalleryItems.length) var height = notesGalleryItems[j].getBoundingClientRect().top-notesGalleryItems[j+colCount].getBoundingClientRect().top
+            if (j+colCount<notesGalleryItems.length) var height = -notesGalleryItems[j].getBoundingClientRect().height-notesGalleryItems[j].getBoundingClientRect().height/18*2
             else var height = -notesGalleryItems[j].getBoundingClientRect().height
             if (Math.floor(j/colCount)<number){
                 curTranslate += height
@@ -138,6 +197,7 @@ function initItems(){
         }
         if (details[i]['number'] == 0) details[i]['dir'] = -1
     }
+    console.log(details)
 }
 
 initItems()
