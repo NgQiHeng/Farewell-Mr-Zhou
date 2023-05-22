@@ -43,7 +43,7 @@ h1 {
     width: inherit;
     background-size: cover !important;
     background-position: center !important;
-    padding: 1em 2em;
+    padding: min(3vw, 1em) min(6vw, 2em);
     border-radius: 10px;
     background:#4B4D52 !important;
     border-radius:1rem !important;
@@ -53,7 +53,7 @@ h1 {
     box-shadow:0 0 1rem 0 #2a2f3b ;
 }
 .timeline-container > .front p, .timeline-container > .back p {
-    font-size: 0.9125rem;
+    font-size: min(4vw, 1.5rem);
     line-height: 160%;
     color: #e2f8ff;
     margin-top:1em;
@@ -76,7 +76,7 @@ h1 {
     border-radius: 2rem;
     border: 0.4rem solid var(--bs-blue);
     z-index: 2;
-    top: 12rem;
+    top: 40%;
 }
 
 .flex-down {
@@ -91,5 +91,6 @@ h1 {
     display: flex;
     justify-content: space-evenly;
     width: 100%;
+    align-items: center;
 }
 

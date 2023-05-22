@@ -1,7 +1,8 @@
 
-html{
+html {
     overflow-x: hidden;
 }
+
 body{
     font-size: calc(10px + 0.5vw);
     overflow:hidden;
@@ -38,16 +39,17 @@ body{
 
 .polaroid {
     text-align: right;
-    width: 45%;
-    border-radius: 1rem;
-    border: 1rem solid #eeeeee;
-    border-bottom-width: 2.5rem;
+    width: 50%;
+    height: 28%; /* aspect ratio 16/9, hardcoded*/
+    border-radius: min(2vw, 1rem);
+    border: min(2vw, 1rem) solid #eeeeee;
+    border-bottom-width: min(4vw, 3rem);
     border-bottom-style: solid;
 }
 
 .polaroid-container {
     text-align: right;
-    padding: min(2rem, 10vw);
+    padding: min(5vw, 2rem);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,7 +57,7 @@ body{
 }
 
 .polariod-text {
-    font-size: clamp(1rem, 10vw, 3rem);
+    font-size: max(5vw, 2rem);
     text-align: center;
 }
 
@@ -106,5 +108,8 @@ body{
     }
     .dot {
         left: 68.2%;
+    }
+    .polariod-text {
+        font-size: min(5vw, 1rem);
     }
 }
