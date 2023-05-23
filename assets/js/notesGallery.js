@@ -73,10 +73,14 @@ function resumeItems(col,instant){
 function moveCol(i,dir){
     const containerHeight = notesGallery.getBoundingClientRect().height
     const scrolling = dir!=null
-    if (scrolling && (details[i]["number"]<=0||details[i]["number"]>=details[i]["totalRows"]-1)) return false
+    console.log(scrolling,(details[i]["number"]<=0&&dir == 1),(details[i]["number"]>=details[i]["totalRows"]-1&& dir == -1),dir,details[i]["number"])
+    if (scrolling && ((details[i]["number"]<=0&&dir == 1)||(details[i]["number"]>=details[i]["totalRows"]-1&& dir == -1))) {
+        console.log("Ran")
+        return false}
     if (details[i]["scrolling"]) return
     dir = dir??details[i]["dir"]
     const number = details[i]["number"] - dir
+    details[i]["number"] = number
     console.log(i+number*colCount-1)
     var height = notesGalleryItems[0].getBoundingClientRect().height/18*20
     height = Math.abs(height)
