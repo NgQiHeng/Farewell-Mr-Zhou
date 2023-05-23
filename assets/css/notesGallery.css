@@ -52,27 +52,6 @@
 
 }
 
-.notes-gallery>*:hover p.text-center{
-    /* Is this hard coding? Yes. Do i give a shit? No. */
-    max-height: 30em;
-    min-height: 11.2em;
-    height:fit-content;
-    overflow: hidden;
-    
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: unset; /* Adjust the number of lines to be displayed */
-    -webkit-box-orient: vertical;
-    /* animation: popUpParagraph 1s forwards; */
-   
-}
-.notes-gallery>*:hover{
-    /* animation: popUp 1s forwards;
-    z-index: 1000;
-    max-height: 40em;
-    overflow: visible; */
-    /* opacity:0 */
-}
 
 
 
@@ -107,7 +86,7 @@
 
 @keyframes descExtend {
     to{
-        max-height: 30em;
+        max-height: 40em;
     }
     
 }
@@ -115,7 +94,7 @@
 @keyframes popUp {
     to{
         background:rgb(34, 34, 34);
-        max-height: 40em;
+        max-height: 50em;
     }
 }
 
