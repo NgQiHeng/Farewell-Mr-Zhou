@@ -89,7 +89,6 @@ body{
 .phone h2 {
     text-align: right !important;
 }
-
 @media (max-width: 500px) {
     /* For the elements already on the left, but need to resize them for the phone */
     .phone-regular {

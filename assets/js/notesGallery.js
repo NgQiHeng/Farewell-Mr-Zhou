@@ -1,12 +1,16 @@
 const notesGalleryItems = document.querySelectorAll(".notes-gallery>*");
 const notesGallery = document.querySelector(".notes-gallery");
-const details = {}
-const moveStates = [true,true,true]
+const extraNote = document.querySelector(".extra-note")
+var details = {}
+var moveStates = [true,true,true]
 var windowWidth = window.innerWidth
 var mobile = windowWidth<500
 var colCount = mobile?2:3
 var toMoveCombi = 0
 var prevTime 
+var removeItemsTimeout
+var prevCol
+
 window.addEventListener('resize',()=>{
     windowWidth = window.innerWidth
     oldmobile = mobile
@@ -14,12 +18,95 @@ window.addEventListener('resize',()=>{
     colCount = mobile?2:3
     if (oldmobile!=mobile){
         initItems()
+        initContainer()
     }
 })
-async function moveItems(){
-    await sleep(200)
-    console.log(mobile,colCount)
+function pauseItems(col){
+    const translateAmt = notesGalleryItems[col-1].getBoundingClientRect().top-notesGallery.getBoundingClientRect().top
+    if (removeItemsTimeout && prevCol == col){
+        console.log(removeItemsTimeout)
+        clearTimeout(removeItemsTimeout)
+        removeItemsTimeout = null
+    }
+    else{
+        details[col]["actual"] = details[col]["translateAmt"]
+    }
+    details[col]["translateAmt"] = translateAmt
+    details[col].paused = true
+    for (var i = col-1;i<notesGalleryItems.length;i+=colCount){
+        notesGalleryItems[i].classList.add("paused")
+        notesGalleryItems[i].style.transitionDuration = `0s`
+        notesGalleryItems[i].style.transform = `translateY(${translateAmt}px)`
+    }
+}
+
+function resumeItems(col,instant){
+    instant = instant??false
+    if (instant){
+        details[col]["translateAmt"] = details[col]["actual"]
+        details[col].paused = false
+        pausedItem = document.querySelectorAll(".paused")
+    for (var item of pausedItem){
+        item.classList.remove("paused")
+    }
+    }
+    prevCol = col
+    removeItemsTimeout = setTimeout(()=>{
+        console.log("Removing")
+        details[col]["translateAmt"] = details[col]["actual"]
+        details[col].paused = false
+        removeItemsTimeout = null
+        prevCol = null
+    },500)
+    pausedItem = document.querySelectorAll(".paused")
+    for (var item of pausedItem){
+        item.classList.remove("paused")
+        item.style.transitionDuration = `0.5s`
+        item.style.transform = `translateY(${details[col]["actual"]}px)`
+    }
+    // for (var i = col-1;i<notesGalleryItems.length;i+=colCount){
+    //     notesGalleryItems[i].classList.remove("paused")
+    //     notesGalleryItems[i].style.transitionDuration = `0.5s`
+    //     notesGalleryItems[i].style.transform = `translateY(${details[col]["actual"]}px)`
+    // }
+}
+function moveCol(i,dir){
     const containerHeight = notesGallery.getBoundingClientRect().height
+    const scrolling = dir!=null
+    if (scrolling && (details[i]["number"]<=0||details[i]["number"]>=details[i]["totalRows"]-1)) return false
+    if (details[i]["scrolling"]) return
+    dir = dir??details[i]["dir"]
+    const number = details[i]["number"] - dir
+    console.log(i+number*colCount-1)
+    var height = notesGalleryItems[0].getBoundingClientRect().height/18*20
+    height = Math.abs(height)
+    var curTranslate = details[i]["translateAmt"] + dir * height
+    const totalHeight = details[i]["totalHeight"]
+    const lastChildBottom = totalHeight+curTranslate
+    if (lastChildBottom<containerHeight) {
+        
+        curTranslate-=lastChildBottom-containerHeight
+        details[i]["dir"] = 1
+        details[i]['number'] = details[i]['totalRows']-1
+    }
+    if (curTranslate>=0){
+        curTranslate = 0
+        details[i]["dir"] = -1
+        details[i]['number'] = 0
+    }
+    if (scrolling){
+        details[i]["scrolling"] = true
+        setTimeout(()=>{details[i]["scrolling"] = false},822)
+}
+    details[i]["translateAmt"] = curTranslate
+    for (var j = i-1;j<notesGalleryItems.length;j+=colCount){
+        notesGalleryItems[j].style.transitionDuration = `0.822s`
+        notesGalleryItems[j].style.transitionTimingFunction = `ease-in-out`
+        notesGalleryItems[j].style.transform = `translateY(${curTranslate}px)`
+    }
+}
+async function moveItems(){
+    
     const Combis = mobile?{0:[1],1:[2]}:{
         0:[1,3],
         1:[2,3],
@@ -31,53 +118,31 @@ async function moveItems(){
     for (var i = 1;i<colCount+1;i++){
         if (!toMove.includes(i)) continue
         if (!moveStates[i-1]) continue
-        const dir = details[i]["dir"]
-        const number = details[i]["number"] - dir
-        console.log(i,i+number*colCount-1,i-1+number*colCount+colCount*dir)
-        var height = notesGalleryItems[i+number*colCount-1].getBoundingClientRect().top-notesGalleryItems[i-1+number*colCount+colCount*dir].getBoundingClientRect().top
-        height = Math.abs(height)
-        var curTranslate = details[i]["translateAmt"] + dir * height
-        const totalHeight = details[i]["totalHeight"]
-        const lastChildBottom = totalHeight+curTranslate
-        if (lastChildBottom<containerHeight) {
-            curTranslate-=lastChildBottom-containerHeight
-            details[i]["dir"] = 1
-            details[i]['number'] = details[i]['totalRows']-1
-        }
-        if (curTranslate>=0){
-            curTranslate = 0
-            details[i]["dir"] = -1
-            details[i]['number'] = 0
-        }
-        details[i]["translateAmt"] = curTranslate
-        for (var j = i-1;j<notesGalleryItems.length;j+=colCount){
-            notesGalleryItems[j].style.transitionDuration = `1s`
-            notesGalleryItems[j].style.transitionTimingFunction = `ease-in-out`
-            notesGalleryItems[j].style.transform = `translateY(${curTranslate}px)`
-        }
+        if (details[i].paused) continue
+        moveCol(i)
+        
     }
 }
+function getColNum(x){
+    if (notesGalleryItems[0].getBoundingClientRect().left<x && x<notesGalleryItems[0].getBoundingClientRect().right){
+        return 1
+    }
+    if (notesGalleryItems[1].getBoundingClientRect().left<x && x<notesGalleryItems[1].getBoundingClientRect().right){
+        return 2
+    }
+    if (notesGalleryItems[2].getBoundingClientRect().left<x && x<notesGalleryItems[2].getBoundingClientRect().right){
+        return 3
+    }
+
+}
 function initContainer(){
+    
     const updateStates = function(event){
         var x = event.clientX
-        if (notesGalleryItems[0].getBoundingClientRect().left<x && x<notesGalleryItems[0].getBoundingClientRect().right){
-            moveStates[0] = false
-        }
-        else{
-            moveStates[0] = true
-        }
-        if (notesGalleryItems[1].getBoundingClientRect().left<x && x<notesGalleryItems[1].getBoundingClientRect().right){
-            moveStates[1] = false
-        }
-        else{
-            moveStates[1] = true
-        }
-        if (notesGalleryItems[2].getBoundingClientRect().left<x && x<notesGalleryItems[2].getBoundingClientRect().right){
-            moveStates[2] = false
-        }
-        else{
-            moveStates[2] = true
-        }
+        var colNum = getColNum(x)
+        moveStates = [true,true,true]
+        if (colNum==null) return 
+        moveStates[colNum-1] = false
     }
     notesGallery.onmouseenter = updateStates
     notesGallery.onmousemove = updateStates
@@ -86,13 +151,66 @@ function initContainer(){
         moveStates[1] = true
         moveStates[2] = true
     }
+
+    notesGallery.onwheel = function(event){
+        
+        var x = event.clientX
+        var colNum = getColNum(x)
+        
+        if (colNum==null) return
+        event.preventDefault()
+        moveCol(colNum,event.deltaY>0?1:-1) !== false
+    }
+}
+function setUpHover(item){
+    item.onwheel = function(event){
+        event.preventDefault()
+        var colNum = this.colNum
+        if (colNum==null) return
+        moveCol(colNum,event.deltaY>0?1:-1) !== false
+    }
+    item.onmouseenter = function(){
+        if (details[this.colNum].scrolling) return
+        this.style.opacity = "0"
+        extraNote.style.display = "flex"
+        extraNote.querySelector("p").innerHTML = this.querySelector("p").innerHTML
+        extraNote.querySelector(".text-primary").innerHTML = this.querySelector(".text-primary").innerHTML
+        extraNote.querySelector(".text-muted").innerHTML = this.querySelector(".text-muted").innerHTML
+        extraNote.style.left = `calc(${this.colNum-1} * (100% - ${(colCount-1)*2}em)/${colCount} + ${2*(this.colNum-1)}em)`
+        extraNote.style.top = `${(this.getBoundingClientRect().top - notesGallery.getBoundingClientRect().top)/notesGallery.getBoundingClientRect().height*100}%`
+        pauseItems(this.colNum,this)
+        extraNote.onmouseleave = ()=>{
+            console.log("left")
+            resumeItems(this.colNum)
+            this.style.opacity = "1"
+            extraNote.style.display = "none"
+        }
+        extraNote.onwheel = (event)=>{
+            event.preventDefault()
+            var colNum = this.colNum
+            if (colNum==null) return
+
+            if (moveCol(colNum,event.deltaY>0?1:-1) !== false){    
+                extraNote.onmouseleave = null
+                resumeItems(this.colNum,true)
+                extraNote.style.display = "none"
+                this.style.opacity = "1"
+            }
+            
+        }
+        var computedStyle = window.getComputedStyle(this)
+        var transitionDuration = computedStyle.getPropertyValue('transition-duration')
+    }
 }
 function initItems(){
     const containerHeight = notesGallery.getBoundingClientRect().height
     const containerTop = notesGallery.getBoundingClientRect().top
     const containerBottom = notesGallery.getBoundingClientRect().bottom
     console.log(colCount)
+    details = {}
+
     for (var i = 1;i<colCount+1;i++){
+        
         const number = Math.floor(Math.random()*Math.floor(notesGalleryItems.length/colCount))
         details[i] = {dir:Math.random() < 0.5 ? -1 : 1,"number":number}
         var curTranslate = 0
@@ -100,8 +218,9 @@ function initItems(){
         var totalRows = 0
         console.log(number)
         for (var j = i-1;j<notesGalleryItems.length;j+=colCount){
+            setUpHover(notesGalleryItems[j])
             var height
-            if (j+colCount<notesGalleryItems.length) var height = notesGalleryItems[j].getBoundingClientRect().top-notesGalleryItems[j+colCount].getBoundingClientRect().top
+            if (j+colCount<notesGalleryItems.length) var height = -notesGalleryItems[j].getBoundingClientRect().height-notesGalleryItems[j].getBoundingClientRect().height/18*2
             else var height = -notesGalleryItems[j].getBoundingClientRect().height
             if (Math.floor(j/colCount)<number){
                 curTranslate += height
@@ -138,6 +257,7 @@ function initItems(){
         }
         if (details[i]['number'] == 0) details[i]['dir'] = -1
     }
+    console.log(details)
 }
 
 initItems()

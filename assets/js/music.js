@@ -15,9 +15,8 @@ function oneLoop(){
     const repeat = ()=>{
         var currentTime = audio.currentTime
         var defaultTime = 3287.671238
-        if (!prevTime){
-            console.log(defaultTime)
-            
+        // var defaultTime = 100
+        if (!prevTime){            
             setTimeout(()=>{
                 moveItems()
                 // flip()
@@ -27,7 +26,6 @@ function oneLoop(){
         }
         
         var timeUntil = 2*defaultTime - (currentTime-prevTime)*1000 +1
-        console.log(timeUntil,currentTime-prevTime,currentTime,prevTime)
         prevTime = audio.currentTime
 
 
@@ -42,7 +40,7 @@ function oneLoop(){
         moveItems()
         // flip()
         movePolariodPictures()
-        repeat()},710)
+        repeat()},1329)
 }
 function play(){
     if (clicked == false){
