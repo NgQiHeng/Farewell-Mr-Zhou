@@ -61,7 +61,7 @@ function resumeItems(col,instant){
     pausedItem = document.querySelectorAll(".paused")
     for (var item of pausedItem){
         item.classList.remove("paused")
-        item.style.transitionDuration = `0.5s`
+        item.style.transitionDuration = `0.1s`
         item.style.transform = `translateY(${details[col]["actual"]}px)`
     }
     // for (var i = col-1;i<notesGalleryItems.length;i+=colCount){
@@ -163,7 +163,7 @@ function initContainer(){
         
         if (colNum==null) return
         event.preventDefault()
-        moveCol(colNum,event.deltaY>0?1:-1) !== false
+        moveCol(colNum,event.deltaY>0?-1:1) !== false
     }
 }
 function setUpHover(item){
@@ -171,7 +171,7 @@ function setUpHover(item){
         event.preventDefault()
         var colNum = this.colNum
         if (colNum==null) return
-        moveCol(colNum,event.deltaY>0?1:-1) !== false
+        moveCol(colNum,event.deltaY>0?-1:1) !== false
     }
     item.onmouseenter = function(){
         if (details[this.colNum].scrolling) return
@@ -194,7 +194,7 @@ function setUpHover(item){
             var colNum = this.colNum
             if (colNum==null) return
 
-            if (moveCol(colNum,event.deltaY>0?1:-1) !== false){    
+            if (moveCol(colNum,event.deltaY>0?-1:1) !== false){    
                 extraNote.onmouseleave = null
                 resumeItems(this.colNum,true)
                 extraNote.style.display = "none"

@@ -84,6 +84,7 @@
     line-height: 1.4em;
     overflow: hidden;
     animation: descExtend 1s forwards;
+    text-align: left !important;
 }
 
 @keyframes descExtend {
