@@ -14,7 +14,9 @@ function oneLoop(){
     prevTime = null
     const repeat = ()=>{
         var currentTime = audio.currentTime
-        var defaultTime = 3287.671238
+        // var defaultTime = 3287.671238
+        var defaultTime = 3300
+        // var defaultTime = 1594
         // var defaultTime = 100
         if (!prevTime){            
             setTimeout(()=>{
