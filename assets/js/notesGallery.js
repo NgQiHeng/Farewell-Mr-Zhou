@@ -61,7 +61,7 @@ function resumeItems(col,instant){
     pausedItem = document.querySelectorAll(".paused")
     for (var item of pausedItem){
         item.classList.remove("paused")
-        item.style.transitionDuration = `0.1s`
+        item.style.transitionDuration = `0.5s`
         item.style.transform = `translateY(${details[col]["actual"]}px)`
     }
     // for (var i = col-1;i<notesGalleryItems.length;i+=colCount){
